@@ -1,0 +1,30 @@
+{
+  "name": "suede-and-fbi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "jest",
+    "migrate": "sqlite3 db/election.db < db/schema.sql",
+    "seed": "sqlite3 db/election.db < db/seeds.sql",
+    "db": "sqlite3 db/election.db",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jcorum11/suede-and-fbi.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jcorum11/suede-and-fbi/issues"
+  },
+  "homepage": "https://github.com/jcorum11/suede-and-fbi#readme",
+  "dependencies": {
+    "console.table": "^0.10.0",
+    "inquirer": "^7.3.2",
+    "jest": "^26.1.0",
+    "mysql2": "^2.1.0"
+  }
+}
