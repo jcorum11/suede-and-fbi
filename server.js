@@ -13,15 +13,47 @@ app.use(express.json());
 
 //api routes
 
-app.get("/api/departments", (req, res) => {
+app.get("/api/all-departments", (req, res) => {
     connection.promise().query(`SELECT * FROM departments`)
         .then(([rows, fields]) => {
             res.json({
                 message: "success",
                 data: rows
-            })
+            });
         })
         .catch(console.log)
+});
+
+app.get("/api/all-roles", (req, res) => {
+    connection.promise().query(`SELECT roles.*, departments.name AS department_name
+     FROM roles
+     LEFT JOIN departments
+     ON roles.department_id = departments.id`)
+        .then(([rows, fields]) => {
+            res.json({
+                message: "success",
+                data: rows
+            });
+        })
+        .catch(console.log)
+});
+
+app.get("/api/all-employees", (req, res) => {
+    connection.promise().query(`SELECT e.*, CONCAT(m.first_name, " ", m.last_name) AS manager_name,
+    roles.title, roles.salary, roles.department_id, departments.name AS department
+    FROM employees e
+    LEFT JOIN roles
+    ON e.role_id = roles.id
+    LEFT JOIN departments
+    ON roles.department_id = departments.id
+    INNER JOIN employees m
+    ON e.manager_id = m.id`)
+        .then(([rows, fields]) => {
+            res.json({
+                message: "success",
+                data: rows
+            });
+        })
 });
 
 // Default response
