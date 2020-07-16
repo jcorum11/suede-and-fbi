@@ -25,13 +25,30 @@ router.post("/employee", ({body}, res) => {
     const params = [body.first_name, body.last_name, body.role_id, body.manager_id];
     connection.query(sql, params, function(error, result, fields) {
         if (error) {
-            res.json({error});
+            res.status(400).json({error});
             return;
         }
 
         res.json({
             message: "success", 
             data: body, 
+            id: this.lastID
+        });
+    });
+});
+
+router.put("/employee/:id", (req, res) => {
+    const sql = `UPDATE employees SET role_id = ? WHERE id = ?`;
+    const params = [req.body.role_id, req.params.id];
+    connection.query(sql, params, function(error, result, fields) {
+        if (error) {
+            res.status(400).json({error: error.message});
+            return;
+        }
+
+        res.json({
+            message: "success", 
+            data: req.body, 
             id: this.lastID
         });
     });
